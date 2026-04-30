@@ -23,7 +23,7 @@ For each `gamma` and each start state:
 - compute the exact finite-horizon value,
 - rank states by decreasing value for that `gamma`.
 
-## Planned CLI
+## CLI
 
 The CLI should expose at least these flags:
 
@@ -31,11 +31,11 @@ The CLI should expose at least these flags:
 - `--num-time-steps`: rollout horizon, default `10`
 - `--num-trajectories`: number of Monte Carlo trajectories per `(gamma, start_state)`, default `10`
 
-Reasonable future flags:
+Implemented flags:
 
-- `--seed`: random seed for reproducibility
-- `--output-dir`: override default output directory
-- `--save-format`: choose CSV, Markdown, PNG, or all
+- `--input-json`: path to the MRP specification, default `MRP/inputs/simple_mrp.json`
+- `--output-dir`: output directory, default `MRP/outputs`
+- `--seed`: random seed for reproducibility, default `0`
 
 ## Intended Workflow
 
@@ -53,10 +53,11 @@ Reasonable future flags:
 
 All generated artifacts should be written to `MRP/outputs`.
 
-Suggested outputs:
+Current outputs:
 
 - `state_values_exact.csv`
 - `state_values_mc.csv`
+- `state_value_comparison.csv`
 - `ranked_state_values.md`
 - `value_vs_gamma.png`
 - `comparison_exact_vs_mc.png`
@@ -69,9 +70,15 @@ Each tabular record should contain at least:
 - `value`
 - `rank_within_gamma`
 
-## Example Command Shape
+Monte Carlo outputs also include:
 
-The exact entry point is still to be implemented, but the intended usage is of the form:
+- sample standard deviation across trajectories
+- standard error of the mean
+- 95% confidence interval bounds
+
+## Example Command
+
+The runner is:
 
 ```bash
 python MRP/src/run_mrp_experiment.py \
@@ -91,5 +98,8 @@ when `--gamma-grid-num 21`.
 ## Notes
 
 - The Monte Carlo estimate and the exact finite-horizon value should be reported side by side.
+- `value_vs_gamma.png` shows exact curves and Monte Carlo curves, with 95% confidence bands on the Monte Carlo panel.
+- `comparison_exact_vs_mc.png` is a scatter plot of Monte Carlo estimate against exact value, with a diagonal reference line and Monte Carlo error bars.
 - Because the horizon is finite, values at `gamma = 1` remain well-defined.
 - Exact dynamic programming is mandatory, not optional, because the MRP is small and the exact computation provides a clean validation target for the sampled estimates.
+- `state_value_comparison.csv` includes exact value, Monte Carlo value, ranks, and absolute error for each `(gamma, state)` pair.

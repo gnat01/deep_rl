@@ -1,0 +1,26 @@
+{
+  "name": "simple_markov_reward_process",
+  "states": ["Chat", "Coffee", "Computer", "Home"],
+  "transitions": {
+    "Chat": [
+      {"next_state": "Chat", "probability": 0.5, "reward": -1.0},
+      {"next_state": "Coffee", "probability": 0.2, "reward": 1.0},
+      {"next_state": "Computer", "probability": 0.3, "reward": 2.0}
+    ],
+    "Coffee": [
+      {"next_state": "Chat", "probability": 0.7, "reward": 2.0},
+      {"next_state": "Coffee", "probability": 0.1, "reward": 1.0},
+      {"next_state": "Computer", "probability": 0.2, "reward": 3.0}
+    ],
+    "Computer": [
+      {"next_state": "Chat", "probability": 0.1, "reward": -3.0},
+      {"next_state": "Coffee", "probability": 0.2, "reward": 1.0},
+      {"next_state": "Computer", "probability": 0.5, "reward": 5.0},
+      {"next_state": "Home", "probability": 0.2, "reward": 2.0}
+    ],
+    "Home": [
+      {"next_state": "Coffee", "probability": 0.4, "reward": 1.0},
+      {"next_state": "Home", "probability": 0.6, "reward": 1.0}
+    ]
+  }
+}
