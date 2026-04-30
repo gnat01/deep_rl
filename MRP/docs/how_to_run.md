@@ -36,6 +36,8 @@ Implemented flags:
 - `--input-json`: path to the MRP specification, default `MRP/inputs/simple_mrp.json`
 - `--output-dir`: output directory, default `MRP/outputs`
 - `--seed`: random seed for reproducibility, default `0`
+- `--traj-list`: comma-separated trajectory counts for a trajectory-sweep experiment
+- `--num-horizon`: alias for `--num-time-steps`
 
 ## Intended Workflow
 
@@ -94,6 +96,16 @@ python src/run_mrp_experiment.py \
   --gamma-grid-num 21 \
   --num-time-steps 10 \
   --num-trajectories 10
+```
+
+To compare Monte Carlo estimates against exact values across multiple trajectory counts:
+
+```bash
+python src/run_mrp_experiment.py \
+  --gamma-grid-num 21 \
+  --num-horizon 10 \
+  --traj-list 10,20,50,100,500 \
+  --output-dir outputs_traj_sweep
 ```
 
 ## Create A New MRP
@@ -168,6 +180,7 @@ when `--gamma-grid-num 21`.
 - The Monte Carlo estimate and the exact finite-horizon value should be reported side by side.
 - `value_vs_gamma.png` shows exact curves and Monte Carlo curves, with 95% confidence bands on the Monte Carlo panel.
 - `comparison_exact_vs_mc.png` is a scatter plot of Monte Carlo estimate against exact value, with a diagonal reference line and Monte Carlo error bars.
+- In trajectory-sweep mode, the runner writes `value_vs_gamma_by_trajectory.png`, `comparison_exact_vs_mc_by_trajectory.png`, `error_vs_num_trajectories.png`, and `variance_vs_num_trajectories.png`.
 - Because the horizon is finite, values at `gamma = 1` remain well-defined.
 - Exact dynamic programming is mandatory, not optional, because the MRP is small and the exact computation provides a clean validation target for the sampled estimates.
 - `state_value_comparison.csv` includes exact value, Monte Carlo value, ranks, and absolute error for each `(gamma, state)` pair.

@@ -15,6 +15,13 @@ from experiment import ExperimentConfig, run_experiment
 from mrp_definition import MarkovRewardProcess
 
 
+def parse_int_list(raw: str) -> list[int]:
+    values = [int(part.strip()) for part in raw.split(",") if part.strip()]
+    if not values:
+        raise ValueError("--traj-list must contain at least one integer")
+    return values
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Run finite-horizon MRP value experiments over a gamma grid."
@@ -39,7 +46,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--num-time-steps",
+        "--num-horizon",
         type=int,
+        dest="num_time_steps",
         default=10,
         help="Finite horizon length used for exact and Monte Carlo values.",
     )
@@ -48,6 +57,12 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=10,
         help="Monte Carlo trajectories per (gamma, start_state).",
+    )
+    parser.add_argument(
+        "--traj-list",
+        type=str,
+        default=None,
+        help="Comma-separated trajectory counts, e.g. 10,20,50,100,500.",
     )
     parser.add_argument(
         "--seed",
@@ -64,6 +79,9 @@ def main() -> None:
         raise ValueError("--num-time-steps must be non-negative")
     if args.num_trajectories <= 0:
         raise ValueError("--num-trajectories must be positive")
+    traj_list = parse_int_list(args.traj_list) if args.traj_list else None
+    if traj_list is not None and any(value <= 0 for value in traj_list):
+        raise ValueError("--traj-list entries must all be positive")
 
     mrp = MarkovRewardProcess.from_json(args.input_json)
     config = ExperimentConfig(
@@ -71,6 +89,7 @@ def main() -> None:
         num_time_steps=args.num_time_steps,
         num_trajectories=args.num_trajectories,
         seed=args.seed,
+        traj_list=traj_list,
     )
     outputs = run_experiment(mrp=mrp, config=config, output_dir=args.output_dir)
 
