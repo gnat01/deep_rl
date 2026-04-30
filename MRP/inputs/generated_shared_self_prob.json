@@ -1,0 +1,98 @@
+{
+  "states": [
+    "s0",
+    "s1",
+    "s2",
+    "s3"
+  ],
+  "transitions": {
+    "s0": [
+      {
+        "next_state": "s0",
+        "probability": 0.4,
+        "reward": 2.222109257625241
+      },
+      {
+        "next_state": "s1",
+        "probability": 0.3759643452300975,
+        "reward": 0.5563736068430427
+      },
+      {
+        "next_state": "s2",
+        "probability": 0.14462460821223921,
+        "reward": 0.024670687252071666
+      },
+      {
+        "next_state": "s3",
+        "probability": 0.07941104655766335,
+        "reward": 1.918992945173863
+      }
+    ],
+    "s1": [
+      {
+        "next_state": "s1",
+        "probability": 0.4,
+        "reward": -0.48343636960536274
+      },
+      {
+        "next_state": "s0",
+        "probability": 0.09934113683081289,
+        "reward": 0.5234342790869513
+      },
+      {
+        "next_state": "s2",
+        "probability": 0.1343546595741273,
+        "reward": -0.5908107780014809
+      },
+      {
+        "next_state": "s3",
+        "probability": 0.3663042035950598,
+        "reward": 1.7790210207861197
+      }
+    ],
+    "s2": [
+      {
+        "next_state": "s2",
+        "probability": 0.4,
+        "reward": 1.0918449833766584
+      },
+      {
+        "next_state": "s0",
+        "probability": 0.025610942703100204,
+        "reward": 2.0510861799829474
+      },
+      {
+        "next_state": "s1",
+        "probability": 0.21361562743213536,
+        "reward": 2.510829752197914
+      },
+      {
+        "next_state": "s3",
+        "probability": 0.3607734298647644,
+        "reward": -0.44926215340333675
+      }
+    ],
+    "s3": [
+      {
+        "next_state": "s3",
+        "probability": 0.4,
+        "reward": 1.649158741300643
+      },
+      {
+        "next_state": "s0",
+        "probability": 0.33675789298147807,
+        "reward": -1.496493959658171
+      },
+      {
+        "next_state": "s1",
+        "probability": 0.16932625679038402,
+        "reward": 0.1708591772689183
+      },
+      {
+        "next_state": "s2",
+        "probability": 0.09391585022813784,
+        "reward": 1.0544348672190083
+      }
+    ]
+  }
+}

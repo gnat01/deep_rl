@@ -96,6 +96,41 @@ python src/run_mrp_experiment.py \
   --num-trajectories 10
 ```
 
+## Create A New MRP
+
+You can generate a fresh random MRP JSON with:
+
+```bash
+python MRP/src/create_mrp.py \
+  --num-states 5 \
+  --self-prob 0.4 \
+  --reward-min -2 \
+  --reward-max 3 \
+  --output-json MRP/inputs/generated_mrp.json
+```
+
+Or from inside `MRP/`:
+
+```bash
+python src/create_mrp.py \
+  --num-states 5 \
+  --self-probs 0.2,0.3,0.4,0.5,0.6 \
+  --reward-min -2 \
+  --reward-max 3 \
+  --output-json inputs/generated_mrp.json
+```
+
+Generator flags:
+
+- `--num-states`: number of states
+- `--self-prob`: one shared self-transition probability for every state
+- `--self-probs`: comma-separated per-state self-transition probabilities
+- `--reward-min`, `--reward-max`: reward range for random transition rewards
+- `--state-prefix`: state name prefix, default `s`
+- `--seed`: random seed
+
+For each state, the remaining probability mass `1 - p_self` is distributed randomly across the other states and normalized to sum correctly.
+
 This would evaluate `gamma` on the grid:
 
 ```text

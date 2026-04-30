@@ -49,3 +49,23 @@ class MarkovRewardProcess:
                 raise ValueError(
                     f"Outgoing probabilities from {state!r} sum to {total_probability}, not 1.0"
                 )
+
+    def to_payload(self) -> dict[str, object]:
+        return {
+            "states": self.states,
+            "transitions": {
+                state: [
+                    {
+                        "next_state": transition.next_state,
+                        "probability": transition.probability,
+                        "reward": transition.reward,
+                    }
+                    for transition in self.transitions[state]
+                ]
+                for state in self.states
+            },
+        }
+
+    def to_json(self, path: Path) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(self.to_payload(), indent=2) + "\n")
