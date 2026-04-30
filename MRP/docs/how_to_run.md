@@ -106,6 +106,7 @@ python MRP/src/create_mrp.py \
   --self-prob 0.4 \
   --reward-min -2 \
   --reward-max 3 \
+  --output-png MRP/outputs/generated_mrp.png \
   --output-json MRP/inputs/generated_mrp.json
 ```
 
@@ -117,6 +118,7 @@ python src/create_mrp.py \
   --self-probs 0.2,0.3,0.4,0.5,0.6 \
   --reward-min -2 \
   --reward-max 3 \
+  --output-png outputs/generated_mrp.png \
   --output-json inputs/generated_mrp.json
 ```
 
@@ -128,8 +130,30 @@ Generator flags:
 - `--reward-min`, `--reward-max`: reward range for random transition rewards
 - `--state-prefix`: state name prefix, default `s`
 - `--seed`: random seed
+- `--output-png`: optional path to save a rendered visualization immediately
+- `--label-precision`: decimal precision for edge labels in the visualization
 
 For each state, the remaining probability mass `1 - p_self` is distributed randomly across the other states and normalized to sum correctly.
+
+## Visualize An Existing MRP
+
+To render any MRP JSON as a PNG:
+
+```bash
+python MRP/src/visualize_mrp.py \
+  --input-json MRP/inputs/simple_mrp.json \
+  --output-png MRP/outputs/simple_mrp_visualization.png
+```
+
+Or from inside `MRP/`:
+
+```bash
+python src/visualize_mrp.py \
+  --input-json inputs/simple_mrp.json \
+  --output-png outputs/simple_mrp_visualization.png
+```
+
+The visualizer uses a circular layout, curved directed edges, offset label boxes, and separate self-loop placement so probability and reward annotations stay readable even when the graph is dense.
 
 This would evaluate `gamma` on the grid:
 

@@ -5,10 +5,12 @@ import random
 from pathlib import Path
 
 from mrp_definition import MarkovRewardProcess, Transition
+from visualization import visualize_mrp
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUTPUT_JSON = PROJECT_ROOT / "inputs" / "generated_mrp.json"
+DEFAULT_OUTPUT_PNG = PROJECT_ROOT / "outputs" / "generated_mrp.png"
 
 
 def parse_self_probs(raw: str, num_states: int) -> list[float]:
@@ -152,6 +154,18 @@ def parse_args() -> argparse.Namespace:
         default=0,
         help="Random seed for reproducibility.",
     )
+    parser.add_argument(
+        "--output-png",
+        type=Path,
+        default=None,
+        help="Optional PNG path for rendering the generated MRP.",
+    )
+    parser.add_argument(
+        "--label-precision",
+        type=int,
+        default=2,
+        help="Decimal precision for probability and reward labels in the visualization.",
+    )
     return parser.parse_args()
 
 
@@ -161,6 +175,8 @@ def main() -> None:
         raise ValueError("--num-states must be positive")
     if args.reward_min > args.reward_max:
         raise ValueError("--reward-min must be <= --reward-max")
+    if args.label_precision < 0:
+        raise ValueError("--label-precision must be non-negative")
 
     if args.self_prob is not None:
         self_probs = [args.self_prob] * args.num_states
@@ -178,6 +194,13 @@ def main() -> None:
     )
     mrp.to_json(args.output_json)
     print(f"Wrote MRP JSON: {args.output_json.resolve()}")
+    if args.output_png is not None:
+        output_png = visualize_mrp(
+            mrp=mrp,
+            output_path=args.output_png,
+            label_precision=args.label_precision,
+        )
+        print(f"Wrote visualization: {output_png.resolve()}")
 
 
 if __name__ == "__main__":

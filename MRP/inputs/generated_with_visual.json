@@ -1,0 +1,146 @@
+{
+  "states": [
+    "s0",
+    "s1",
+    "s2",
+    "s3",
+    "s4"
+  ],
+  "transitions": {
+    "s0": [
+      {
+        "next_state": "s0",
+        "probability": 0.4,
+        "reward": 2.222109257625241
+      },
+      {
+        "next_state": "s1",
+        "probability": 0.2856358431541579,
+        "reward": 0.024670687252071666
+      },
+      {
+        "next_state": "s2",
+        "probability": 0.10987736585037124,
+        "reward": 1.918992945173863
+      },
+      {
+        "next_state": "s3",
+        "probability": 0.06033189457199735,
+        "reward": -0.48343636960536274
+      },
+      {
+        "next_state": "s4",
+        "probability": 0.14415489642347346,
+        "reward": 0.3829847707617793
+      }
+    ],
+    "s1": [
+      {
+        "next_state": "s1",
+        "probability": 0.4,
+        "reward": 0.9169101972751559
+      },
+      {
+        "next_state": "s0",
+        "probability": 0.2965087934470743,
+        "reward": 1.0918449833766584
+      },
+      {
+        "next_state": "s2",
+        "probability": 0.08726424824304065,
+        "reward": -0.7474682931877972
+      },
+      {
+        "next_state": "s3",
+        "probability": 0.041120306883990036,
+        "reward": 2.548731279841201
+      },
+      {
+        "next_state": "s4",
+        "probability": 0.17510665142589493,
+        "reward": 2.913927380188266
+      }
+    ],
+    "s2": [
+      {
+        "next_state": "s2",
+        "probability": 0.4,
+        "reward": 2.0510861799829474
+      },
+      {
+        "next_state": "s0",
+        "probability": 0.22153734445285939,
+        "reward": 1.4199196595772063
+      },
+      {
+        "next_state": "s1",
+        "probability": 0.03538501311062846,
+        "reward": 0.3607135772635668
+      },
+      {
+        "next_state": "s3",
+        "probability": 0.12472806497133526,
+        "reward": -1.496493959658171
+      },
+      {
+        "next_state": "s4",
+        "probability": 0.2183495774651769,
+        "reward": 0.1708591772689183
+      }
+    ],
+    "s3": [
+      {
+        "next_state": "s3",
+        "probability": 0.4,
+        "reward": 1.0544348672190083
+      },
+      {
+        "next_state": "s0",
+        "probability": 0.17248959615371198,
+        "reward": -0.6975384480402029
+      },
+      {
+        "next_state": "s1",
+        "probability": 0.24011695644106065,
+        "reward": 2.0251391350651113
+      },
+      {
+        "next_state": "s2",
+        "probability": 0.04578527619363871,
+        "reward": 0.7434965191779463
+      },
+      {
+        "next_state": "s4",
+        "probability": 0.14160817121158872,
+        "reward": -1.9297914991799052
+      }
+    ],
+    "s4": [
+      {
+        "next_state": "s4",
+        "probability": 0.4,
+        "reward": 1.5985234320197708
+      },
+      {
+        "next_state": "s0",
+        "probability": 0.09099971832228589,
+        "reward": 0.4678893323266231
+      },
+      {
+        "next_state": "s1",
+        "probability": 0.31153367816662214,
+        "reward": 2.3380138774639043
+      },
+      {
+        "next_state": "s2",
+        "probability": 0.19726211835025775,
+        "reward": -0.7804456155643402
+      },
+      {
+        "next_state": "s3",
+        "probability": 0.00020448516083420781,
+        "reward": -0.3739781862630496
+      }
+    ]
+  }
+}
