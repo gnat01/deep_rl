@@ -4,8 +4,10 @@ import argparse
 import os
 from pathlib import Path
 
-
-DEFAULT_MPLCONFIGDIR = Path("MRP/outputs/.mplconfig")
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_INPUT_JSON = PROJECT_ROOT / "inputs" / "simple_mrp.json"
+DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "outputs"
+DEFAULT_MPLCONFIGDIR = DEFAULT_OUTPUT_DIR / ".mplconfig"
 DEFAULT_MPLCONFIGDIR.mkdir(parents=True, exist_ok=True)
 os.environ.setdefault("MPLCONFIGDIR", str(DEFAULT_MPLCONFIGDIR.resolve()))
 
@@ -20,13 +22,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--input-json",
         type=Path,
-        default=Path("MRP/inputs/simple_mrp.json"),
+        default=DEFAULT_INPUT_JSON,
         help="Path to the MRP transition-reward specification.",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path("MRP/outputs"),
+        default=DEFAULT_OUTPUT_DIR,
         help="Directory where CSVs, markdown, and plots will be written.",
     )
     parser.add_argument(

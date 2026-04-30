@@ -87,6 +87,15 @@ python MRP/src/run_mrp_experiment.py \
   --num-trajectories 10
 ```
 
+The same script also works when run from inside `MRP/`:
+
+```bash
+python src/run_mrp_experiment.py \
+  --gamma-grid-num 21 \
+  --num-time-steps 10 \
+  --num-trajectories 10
+```
+
 This would evaluate `gamma` on the grid:
 
 ```text
