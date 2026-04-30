@@ -65,6 +65,12 @@ def parse_args() -> argparse.Namespace:
         help="Comma-separated trajectory counts, e.g. 10,20,50,100,500.",
     )
     parser.add_argument(
+        "--horizon-list",
+        type=str,
+        default=None,
+        help="Comma-separated horizon values, e.g. 10,20,50,100,300,500,1000.",
+    )
+    parser.add_argument(
         "--seed",
         type=int,
         default=0,
@@ -80,8 +86,11 @@ def main() -> None:
     if args.num_trajectories <= 0:
         raise ValueError("--num-trajectories must be positive")
     traj_list = parse_int_list(args.traj_list) if args.traj_list else None
+    horizon_list = parse_int_list(args.horizon_list) if args.horizon_list else None
     if traj_list is not None and any(value <= 0 for value in traj_list):
         raise ValueError("--traj-list entries must all be positive")
+    if horizon_list is not None and any(value <= 0 for value in horizon_list):
+        raise ValueError("--horizon-list entries must all be positive")
 
     mrp = MarkovRewardProcess.from_json(args.input_json)
     config = ExperimentConfig(
@@ -90,6 +99,7 @@ def main() -> None:
         num_trajectories=args.num_trajectories,
         seed=args.seed,
         traj_list=traj_list,
+        horizon_list=horizon_list,
     )
     outputs = run_experiment(mrp=mrp, config=config, output_dir=args.output_dir)
 

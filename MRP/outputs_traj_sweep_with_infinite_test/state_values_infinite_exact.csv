@@ -1,0 +1,17 @@
+gamma,state,value,rank_within_gamma,method
+0.0,Computer,2.8,1,exact_infinite
+0.0,Coffee,2.1,2,exact_infinite
+0.0,Home,1.0,3,exact_infinite
+0.0,Chat,0.3,4,exact_infinite
+0.25,Computer,3.4472811995039643,1,exact_infinite
+0.25,Coffee,2.4705422569614077,2,exact_infinite
+0.25,Home,1.4671226184660482,3,exact_infinite
+0.25,Chat,0.7795122317838488,4,exact_infinite
+0.5,Computer,4.615787532275912,1,exact_infinite
+0.5,Coffee,3.3483585392843973,2,exact_infinite
+0.5,Home,2.3852452969383995,3,exact_infinite
+0.5,Chat,1.769605311693102,4,exact_infinite
+0.75,Computer,7.813123663062958,1,exact_infinite
+0.75,Coffee,6.258634445279528,2,exact_infinite
+0.75,Home,5.231982424697924,3,exact_infinite
+0.75,Chat,4.794796785569752,4,exact_infinite

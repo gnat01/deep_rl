@@ -58,8 +58,10 @@ All generated artifacts should be written to `MRP/outputs`.
 Current outputs:
 
 - `state_values_exact.csv`
+- `state_values_infinite_exact.csv`
 - `state_values_mc.csv`
 - `state_value_comparison.csv`
+- `finite_vs_infinite_gap.csv`
 - `ranked_state_values.md`
 - `value_vs_gamma.png`
 - `comparison_exact_vs_mc.png`
@@ -77,6 +79,12 @@ Monte Carlo outputs also include:
 - sample standard deviation across trajectories
 - standard error of the mean
 - 95% confidence interval bounds
+
+Infinite-horizon exact outputs:
+
+- are defined only for `gamma < 1`
+- are computed from the linear system `(I - gamma P)V = r`
+- are omitted at `gamma = 1`
 
 ## Example Command
 
@@ -180,6 +188,8 @@ when `--gamma-grid-num 21`.
 - The Monte Carlo estimate and the exact finite-horizon value should be reported side by side.
 - `value_vs_gamma.png` shows exact curves and Monte Carlo curves, with 95% confidence bands on the Monte Carlo panel.
 - `comparison_exact_vs_mc.png` is a scatter plot of Monte Carlo estimate against exact value, with a diagonal reference line and Monte Carlo error bars.
+- `finite_vs_infinite_exact.png` compares exact finite-horizon and exact infinite-horizon values.
+- `truncation_gap_vs_gamma.png` shows the gap between infinite-horizon and finite-horizon exact values as a function of `gamma`.
 - In trajectory-sweep mode, the runner writes `value_vs_gamma_by_trajectory.png`, `comparison_exact_vs_mc_by_trajectory.png`, `error_vs_num_trajectories.png`, and `variance_vs_num_trajectories.png`.
 - Because the horizon is finite, values at `gamma = 1` remain well-defined.
 - Exact dynamic programming is mandatory, not optional, because the MRP is small and the exact computation provides a clean validation target for the sampled estimates.
