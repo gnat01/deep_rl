@@ -746,6 +746,57 @@ def plot_horizon_sweep_gap_vs_horizon(
     plt.close(fig)
 
 
+def plot_horizon_sweep_gap_vs_horizon_loglog(
+    path: Path, comparison_rows: list[dict[str, Any]]
+) -> None:
+    horizons = sorted({row["num_time_steps"] for row in comparison_rows})
+    gammas = sorted(
+        {
+            row["gamma"]
+            for row in comparison_rows
+            if row["infinite_exact_value"] != ""
+        }
+    )
+    fig, axes = plt.subplots(1, 2, figsize=(14, 5), sharex=True, sharey=False)
+
+    for gamma in gammas:
+        finite_gap = []
+        mc_gap = []
+        for horizon in horizons:
+            rows = [
+                row for row in comparison_rows
+                if row["gamma"] == gamma and row["num_time_steps"] == horizon
+                and row["infinite_exact_value"] != ""
+            ]
+            mean_finite_gap = np.mean([row["finite_vs_infinite_abs_gap"] for row in rows])
+            mean_mc_gap = np.mean([row["mc_vs_infinite_abs_gap"] for row in rows])
+            # Avoid zeros on log axes while preserving the visible convergence trend.
+            finite_gap.append(max(mean_finite_gap, 1e-12))
+            mc_gap.append(max(mean_mc_gap, 1e-12))
+        axes[0].plot(horizons, finite_gap, marker="o", linewidth=1.8, label=f"gamma={gamma:.2f}")
+        axes[1].plot(horizons, mc_gap, marker="o", linewidth=1.8, label=f"gamma={gamma:.2f}")
+
+    axes[0].set_xscale("log")
+    axes[0].set_yscale("log")
+    axes[0].set_title("Finite Exact vs Infinite Exact")
+    axes[0].set_xlabel("horizon")
+    axes[0].set_ylabel("mean absolute gap")
+    axes[0].grid(True, which="both", alpha=0.3)
+    axes[0].legend(fontsize=8)
+
+    axes[1].set_xscale("log")
+    axes[1].set_yscale("log")
+    axes[1].set_title("Monte Carlo vs Infinite Exact")
+    axes[1].set_xlabel("horizon")
+    axes[1].set_ylabel("mean absolute gap")
+    axes[1].grid(True, which="both", alpha=0.3)
+    axes[1].legend(fontsize=8)
+
+    fig.tight_layout()
+    fig.savefig(path, dpi=180)
+    plt.close(fig)
+
+
 def plot_horizon_sweep_values_vs_horizon(
     path: Path,
     finite_exact_rows: list[dict[str, Any]],
@@ -998,6 +1049,7 @@ def run_experiment(
         mc_csv = output_dir / "state_values_mc_by_horizon.csv"
         comparison_csv = output_dir / "horizon_sweep_comparison.csv"
         horizon_gap_plot = output_dir / "horizon_sweep_gap_vs_horizon.png"
+        horizon_gap_loglog_plot = output_dir / "horizon_sweep_gap_vs_horizon_loglog.png"
         horizon_values_plot = output_dir / "horizon_sweep_values_vs_horizon.png"
 
         write_csv(finite_exact_csv, finite_exact_rows)
@@ -1005,6 +1057,9 @@ def run_experiment(
         write_csv(mc_csv, mc_rows)
         write_csv(comparison_csv, horizon_comparison_rows)
         plot_horizon_sweep_gap_vs_horizon(horizon_gap_plot, horizon_comparison_rows)
+        plot_horizon_sweep_gap_vs_horizon_loglog(
+            horizon_gap_loglog_plot, horizon_comparison_rows
+        )
         plot_horizon_sweep_values_vs_horizon(
             horizon_values_plot, finite_exact_rows, infinite_rows, mc_rows, mrp.states
         )
@@ -1014,6 +1069,7 @@ def run_experiment(
             "mc_csv": mc_csv,
             "horizon_comparison_csv": comparison_csv,
             "horizon_gap_plot": horizon_gap_plot,
+            "horizon_gap_loglog_plot": horizon_gap_loglog_plot,
             "horizon_values_plot": horizon_values_plot,
         }
 
